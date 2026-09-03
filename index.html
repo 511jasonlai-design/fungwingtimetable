@@ -137,10 +137,8 @@
             white-space: nowrap;
         }
 
-        /* 課程卡片 */
+        /* 課程卡片基礎樣式 */
         .class-card {
-            background-color: var(--brand-light-blue);
-            border-left: 4px solid var(--brand-blue);
             padding: 8px;
             margin: 4px 0;
             border-radius: 4px;
@@ -152,11 +150,10 @@
 
         .class-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 160, 233, 0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
         }
 
         .class-card strong {
-            color: var(--brand-navy);
             display: block;
             margin-bottom: 3px;
         }
@@ -164,6 +161,34 @@
         .class-teacher {
             color: #555;
             font-size: 12px;
+        }
+
+        /* =============== 科目專屬顏色設定 =============== */
+        /* 中文：典雅紅橘色調 */
+        .class-card.subject-中文 {
+            background-color: #fdf2f2;
+            border-left: 4px solid #e53e3e;
+        }
+        .class-card.subject-中文 strong {
+            color: #9b2c2c;
+        }
+
+        /* 英文：清新藍色調 */
+        .class-card.subject-英文 {
+            background-color: var(--brand-light-blue);
+            border-left: 4px solid var(--brand-blue);
+        }
+        .class-card.subject-英文 strong {
+            color: var(--brand-navy);
+        }
+
+        /* 數學：活力綠色調 */
+        .class-card.subject-數學 {
+            background-color: #f0fff4;
+            border-left: 4px solid #38a169;
+        }
+        .class-card.subject-數學 strong {
+            color: #22543d;
         }
 
         .no-data {
@@ -204,7 +229,6 @@
                 <option value="F5">中五 (F5)</option>
             </select>
         </div>
-        <!-- 新增科目篩選條件 -->
         <div class="filter-group">
             <label for="subject">科目：</label>
             <select id="subject" onchange="filterSchedule()">
@@ -496,7 +520,6 @@
             const selectedGrade = document.getElementById("grade").value;
             const selectedSubject = document.getElementById("subject").value;
 
-            // 進行三重條件篩選：分校、年級、科目
             const filtered = scheduleData.filter(item => {
                 const branchMatch = (selectedBranch === "ALL" || item.branch === selectedBranch);
                 const gradeMatch = (selectedGrade === "ALL" || item.grade === selectedGrade);
@@ -526,11 +549,17 @@
                     const td = document.createElement("td");
                     const matches = filtered.filter(item => item.time === time && item.day === day);
                     
-                    matches.forEach(match => {
-                        const classDiv = document.createElement("div");
-                        classDiv.className = "class-card";
-                        classDiv.innerHTML = `<strong>[${match.grade}] ${match.subject}</strong><span class="class-teacher">${match.teacher}</span>`;
-                        td.appendChild(classDiv);
+                    matches.forEach(item => {
+                        const card = document.createElement("div");
+                        // 動態寫入對應科目的 class：subject-中文 / subject-英文 / subject-數學
+                        card.className = `class-card subject-${item.subject}`;
+                        
+                        let branchBadge = selectedBranch === "ALL" ? ` [${item.branch}]` : "";
+                        card.innerHTML = `
+                            <strong>${item.grade} ${item.subject}${branchBadge}</strong>
+                            <span class="class-teacher">${item.teacher}</span>
+                        `;
+                        td.appendChild(card);
                     });
 
                     tr.appendChild(td);
