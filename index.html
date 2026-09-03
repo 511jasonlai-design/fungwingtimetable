@@ -5,88 +5,178 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>風穎教育 - 課程時間表查詢</title>
     <style>
+        :root {
+            --brand-navy: #002060;       /* 官網主品牌深藍 */
+            --brand-blue: #00A0E9;       /* 官網亮藍點綴色 */
+            --brand-light-blue: #E8F4FC; /* 官網淺藍背景/卡片色 */
+            --text-dark: #2C3E50;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        }
+
         body {
-            font-family: "PingFang HK", "Microsoft JhengHei", sans-serif;
-            margin: 20px;
-            background-color: #f4f7f6;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang HK", "Microsoft JhengHei", sans-serif;
+            margin: 0;
+            padding: 30px 15px;
+            background: var(--bg-gradient);
+            color: var(--text-dark);
+            min-height: 100vh;
         }
-        h1 {
+
+        .header-title {
             text-align: center;
-            color: #1a5276;
+            color: var(--brand-navy);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
         }
+
+        .header-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--brand-blue);
+            margin: 8px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* 篩選器區域 */
         .filter-container {
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: 0 auto 20px auto;
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 32, 96, 0.08);
+            max-width: 850px;
+            margin: 0 auto 25px auto;
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            justify-content: space-around;
+            gap: 20px;
+            justify-content: center;
+            border: 1px solid rgba(0, 160, 233, 0.2);
         }
+
         .filter-group {
             display: flex;
-            flex-direction: column;
-            min-width: 200px;
+            align-items: center;
+            gap: 10px;
         }
+
         label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #2c3e50;
+            font-weight: 600;
+            color: var(--brand-navy);
+            font-size: 15px;
         }
+
         select {
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
+            padding: 8px 16px;
+            border: 1.5px solid #dcdfe6;
+            border-radius: 6px;
+            font-size: 15px;
+            color: var(--text-dark);
+            background-color: #fcfcfc;
+            outline: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
         }
+
+        select:focus, select:hover {
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 3px rgba(0, 160, 233, 0.15);
+        }
+
+        /* 表格容器 */
         .table-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 32, 96, 0.08);
             overflow-x: auto;
         }
+
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
         }
+
         th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
+            border-right: 1px solid #eef2f7;
+            border-bottom: 1px solid #eef2f7;
+            padding: 12px 8px;
             text-align: center;
+            vertical-align: top;
         }
+
+        th:first-child, td:first-child {
+            border-left: 1px solid #eef2f7;
+        }
+
         th {
-            background-color: #3498db;
-            color: white;
+            background-color: var(--brand-navy);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 14px 8px;
+            letter-spacing: 0.5px;
         }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+
+        tr:first-child th:first-child { border-top-left-radius: 8px; }
+        tr:first-child th:last-child { border-top-right-radius: 8px; }
+
+        .time-col {
+            background-color: #f8fafc;
+            color: var(--brand-navy);
+            font-weight: 600;
+            font-size: 13px;
+            vertical-align: middle;
+            white-space: nowrap;
         }
+
+        /* 課程卡片 */
         .class-card {
-            background-color: #e8f8f5;
-            border-left: 4px solid #2ecc71;
-            padding: 6px;
+            background-color: var(--brand-light-blue);
+            border-left: 4px solid var(--brand-blue);
+            padding: 8px;
             margin: 4px 0;
-            border-radius: 3px;
-            font-size: 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
+
+        .class-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 160, 233, 0.2);
+        }
+
+        .class-card strong {
+            color: var(--brand-navy);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .class-teacher {
+            color: #555;
+            font-size: 12px;
+        }
+
         .no-data {
             text-align: center;
-            color: #7f8c8d;
-            padding: 20px;
+            color: #8c98a4;
+            padding: 30px;
+            font-size: 15px;
         }
     </style>
 </head>
 <body>
 
-    <h1>風穎教育 課程時間表查詢</h1>
+    <h1 class="header-title">風穎教育 課程時間表查詢</h1>
 
     <div class="filter-container">
         <div class="filter-group">
@@ -120,7 +210,7 @@
         <table id="scheduleTable">
             <thead>
                 <tr>
-                    <th>時間</th>
+                    <th style="width: 12%;">時間</th>
                     <th>星期一</th>
                     <th>星期二</th>
                     <th>星期三</th>
@@ -136,7 +226,6 @@
     </div>
 
     <script>
-        // 小冊子內的時間表數據
         const scheduleData = [
             // P1
             { branch: "天澤", grade: "P1", subject: "英文", teacher: "姚MISS", day: "星期一", time: "15:30-16:30" },
@@ -275,8 +364,6 @@
             { branch: "天澤", grade: "F4", subject: "數學", teacher: "鄧SIR", day: "星期六", time: "16:15-17:15" },
             { branch: "天澤", grade: "F4", subject: "數學", teacher: "湯SIR", day: "星期日", time: "17:15-18:15" },
 
-            
-            // ================= 銀座分校數據 =================
             // 銀座 P1
             { branch: "銀座", grade: "P1", subject: "中文", teacher: "陳MISS", day: "星期五", time: "14:30-15:30" },
             { branch: "銀座", grade: "P1", subject: "英文", teacher: "姚MISS", day: "星期二", time: "18:30-19:30" },
@@ -398,14 +485,12 @@
             const selectedBranch = document.getElementById("branch").value;
             const selectedGrade = document.getElementById("grade").value;
 
-            // 篩選符合條件的課程
             const filtered = scheduleData.filter(item => {
                 const branchMatch = (selectedBranch === "ALL" || item.branch === selectedBranch);
                 const gradeMatch = (selectedGrade === "ALL" || item.grade === selectedGrade);
                 return branchMatch && gradeMatch;
             });
 
-            // 獲取所有出現的時間段並排序
             const timeSlots = [...new Set(filtered.map(item => item.time))].sort();
 
             const tbody = document.getElementById("tableBody");
@@ -416,16 +501,14 @@
                 return;
             }
 
-            // 建立時間表表格
             timeSlots.forEach(time => {
                 const tr = document.createElement("tr");
                 
-                // 時間欄位
                 const timeTd = document.createElement("td");
-                timeTd.innerHTML = `<strong>${time}</strong>`;
+                timeTd.className = "time-col";
+                timeTd.textContent = time;
                 tr.appendChild(timeTd);
 
-                // 星期一至星期日欄位
                 days.forEach(day => {
                     const td = document.createElement("td");
                     const matches = filtered.filter(item => item.time === time && item.day === day);
@@ -433,7 +516,7 @@
                     matches.forEach(match => {
                         const classDiv = document.createElement("div");
                         classDiv.className = "class-card";
-                        classDiv.innerHTML = `<strong>[${match.grade}] ${match.subject}</strong><br>${match.teacher}`;
+                        classDiv.innerHTML = `<strong>[${match.grade}] ${match.subject}</strong><span class="class-teacher">${match.teacher}</span>`;
                         td.appendChild(classDiv);
                     });
 
@@ -444,7 +527,6 @@
             });
         }
 
-        // 初始化載入
         window.onload = filterSchedule;
     </script>
 </body>
