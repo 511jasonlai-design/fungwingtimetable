@@ -47,7 +47,7 @@
             padding: 20px 25px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 32, 96, 0.08);
-            max-width: 850px;
+            max-width: 900px;
             margin: 0 auto 25px auto;
             display: flex;
             flex-wrap: wrap;
@@ -202,6 +202,16 @@
                 <option value="F3">中三 (F3)</option>
                 <option value="F4">中四 (F4)</option>
                 <option value="F5">中五 (F5)</option>
+            </select>
+        </div>
+        <!-- 新增科目篩選條件 -->
+        <div class="filter-group">
+            <label for="subject">科目：</label>
+            <select id="subject" onchange="filterSchedule()">
+                <option value="ALL">所有科目</option>
+                <option value="中文">中文</option>
+                <option value="英文">英文</option>
+                <option value="數學">數學</option>
             </select>
         </div>
     </div>
@@ -484,11 +494,14 @@
         function filterSchedule() {
             const selectedBranch = document.getElementById("branch").value;
             const selectedGrade = document.getElementById("grade").value;
+            const selectedSubject = document.getElementById("subject").value;
 
+            // 進行三重條件篩選：分校、年級、科目
             const filtered = scheduleData.filter(item => {
                 const branchMatch = (selectedBranch === "ALL" || item.branch === selectedBranch);
                 const gradeMatch = (selectedGrade === "ALL" || item.grade === selectedGrade);
-                return branchMatch && gradeMatch;
+                const subjectMatch = (selectedSubject === "ALL" || item.subject === selectedSubject);
+                return branchMatch && gradeMatch && subjectMatch;
             });
 
             const timeSlots = [...new Set(filtered.map(item => item.time))].sort();
