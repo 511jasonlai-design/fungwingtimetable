@@ -1,546 +1,94 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>風穎教育 - 課程時間表查詢</title>
-    <style>
-        :root {
-            --brand-navy: #002060;       /* 官網主品牌深藍 */
-            --brand-blue: #00A0E9;       /* 官網亮藍點綴色 */
-            --brand-light-blue: #E8F4FC; /* 官網淺藍背景/卡片色 */
-            --text-dark: #2C3E50;
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang HK", "Microsoft JhengHei", sans-serif;
-            margin: 0;
-            padding: 30px 15px;
-            background: var(--bg-gradient);
-            color: var(--text-dark);
-            min-height: 100vh;
-        }
-
-        .header-title {
-            text-align: center;
-            color: var(--brand-navy);
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 25px;
-            letter-spacing: 1px;
-        }
-
-        .header-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--brand-blue);
-            margin: 8px auto 0 auto;
-            border-radius: 2px;
-        }
-
-        /* 篩選器區域 */
-        .filter-container {
-            background-color: #ffffff;
-            padding: 20px 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 32, 96, 0.08);
-            max-width: 900px;
-            margin: 0 auto 25px auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            border: 1px solid rgba(0, 160, 233, 0.2);
-        }
-
-        .filter-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        label {
-            font-weight: 600;
-            color: var(--brand-navy);
-            font-size: 15px;
-        }
-
-        select {
-            padding: 8px 16px;
-            border: 1.5px solid #dcdfe6;
-            border-radius: 6px;
-            font-size: 15px;
-            color: var(--text-dark);
-            background-color: #fcfcfc;
-            outline: none;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        select:focus, select:hover {
-            border-color: var(--brand-blue);
-            box-shadow: 0 0 0 3px rgba(0, 160, 233, 0.15);
-        }
-
-        /* 表格容器 */
-        .table-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 32, 96, 0.08);
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        th, td {
-            border-right: 1px solid #eef2f7;
-            border-bottom: 1px solid #eef2f7;
-            padding: 12px 8px;
-            text-align: center;
-            vertical-align: top;
-        }
-
-        th:first-child, td:first-child {
-            border-left: 1px solid #eef2f7;
-        }
-
-        th {
-            background-color: var(--brand-navy);
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 15px;
-            padding: 14px 8px;
-            letter-spacing: 0.5px;
-        }
-
-        tr:first-child th:first-child { border-top-left-radius: 8px; }
-        tr:first-child th:last-child { border-top-right-radius: 8px; }
-
-        .time-col {
-            background-color: #f8fafc;
-            color: var(--brand-navy);
-            font-weight: 600;
-            font-size: 13px;
-            vertical-align: middle;
-            white-space: nowrap;
-        }
-
-        /* 課程卡片 */
-        .class-card {
-            background-color: var(--brand-light-blue);
-            border-left: 4px solid var(--brand-blue);
-            padding: 8px;
-            margin: 4px 0;
-            border-radius: 4px;
-            font-size: 13px;
-            text-align: left;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        .class-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 160, 233, 0.2);
-        }
-
-        .class-card strong {
-            color: var(--brand-navy);
-            display: block;
-            margin-bottom: 3px;
-        }
-
-        .class-teacher {
-            color: #555;
-            font-size: 12px;
-        }
-
-        .no-data {
-            text-align: center;
-            color: #8c98a4;
-            padding: 30px;
-            font-size: 15px;
-        }
-    </style>
+<meta charset="UTF-8">
+<style>
+  body {
+    font-family: "Comic Sans MS", "Chalkboard SE", "YuGothic", "微軟正黑體", sans-serif;
+    background-color: #fdfbf7;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  table {
+    border-collapse: separate;
+    border-spacing: 8px;
+    width: 90%;
+    max-width: 800px;
+  }
+  th, td {
+    border-radius: 12px;
+    text-align: center;
+    padding: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  th {
+    background-color: #e2d4f0;
+    color: #4a3e56;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  /* 左邊時間欄：字體加大、可愛深紫灰配色 */
+  .time-col {
+    background-color: #eee5f8;
+    color: #5d4a6d;
+    font-size: 20px;
+    font-weight: bold;
+    width: 15%;
+  }
+  /* 中間格子文字：加大加粗 */
+  .cell-text {
+    font-size: 22px;
+    font-weight: bold;
+    display: block;
+  }
+  /* 科目專屬顏色 */
+  .chinese {
+    background-color: #ffb7c5; /* 櫻花粉 */
+    color: #5c1d28;
+  }
+  .english {
+    background-color: #a8e6cf; /* 薄荷綠 */
+    color: #1b4d3e;
+  }
+  .math {
+    background-color: #ffd3b6; /* 奶油黃/暖杏色 */
+    color: #5a3d28;
+  }
+  .other {
+    background-color: #f0f0f0;
+    color: #666666;
+  }
+</style>
 </head>
 <body>
 
-    <h1 class="header-title">風穎教育 課程時間表查詢</h1>
+<table>
+  <tr>
+    <th>時間</th>
+    <th>週一</th>
+    <th>週二</th>
+    <th>週三</th>
+    <th>週四</th>
+    <th>週五</th>
+  </tr>
+  <tr>
+    <td class="time-col">08:00<br>|<br>09:00</td>
+    <td class="chinese"><span class="cell-text">中文</span></td>
+    <td class="english"><span class="cell-text">英文</span></td>
+    <td class="math"><span class="cell-text">數學</span></td>
+    <td class="chinese"><span class="cell-text">中文</span></td>
+    <td class="english"><span class="cell-text">英文</span></td>
+  </tr>
+  <tr>
+    <td class="time-col">09:10<br>|<br>10:10</td>
+    <td class="math"><span class="cell-text">數學</span></td>
+    <td class="chinese"><span class="cell-text">中文</span></td>
+    <td class="english"><span class="cell-text">英文</span></td>
+    <td class="math"><span class="cell-text">數學</span></td>
+    <td class="chinese"><span class="cell-text">中文</span></td>
+  </tr>
+</table>
 
-    <div class="filter-container">
-        <div class="filter-group">
-            <label for="branch">分校：</label>
-            <select id="branch" onchange="filterSchedule()">
-                <option value="ALL">所有分校</option>
-                <option value="天澤">天澤分校</option>
-                <option value="銀座">銀座分校</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <label for="grade">年級：</label>
-            <select id="grade" onchange="filterSchedule()">
-                <option value="ALL">所有年級</option>
-                <option value="P1">小一 (P1)</option>
-                <option value="P2">小二 (P2)</option>
-                <option value="P3">小三 (P3)</option>
-                <option value="P4">小四 (P4)</option>
-                <option value="P5">小五 (P5)</option>
-                <option value="P6">小六 (P6)</option>
-                <option value="F1">中一 (F1)</option>
-                <option value="F2">中二 (F2)</option>
-                <option value="F3">中三 (F3)</option>
-                <option value="F4">中四 (F4)</option>
-                <option value="F5">中五 (F5)</option>
-            </select>
-        </div>
-        <!-- 新增科目篩選條件 -->
-        <div class="filter-group">
-            <label for="subject">科目：</label>
-            <select id="subject" onchange="filterSchedule()">
-                <option value="ALL">所有科目</option>
-                <option value="中文">中文</option>
-                <option value="英文">英文</option>
-                <option value="數學">數學</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="table-container">
-        <table id="scheduleTable">
-            <thead>
-                <tr>
-                    <th style="width: 12%;">時間</th>
-                    <th>星期一</th>
-                    <th>星期二</th>
-                    <th>星期三</th>
-                    <th>星期四</th>
-                    <th>星期五</th>
-                    <th>星期六</th>
-                    <th>星期日</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-            </tbody>
-        </table>
-    </div>
-
-    <script>
-        const scheduleData = [
-            // P1
-            { branch: "天澤", grade: "P1", subject: "英文", teacher: "姚MISS", day: "星期一", time: "15:30-16:30" },
-
-            // P2
-            { branch: "天澤", grade: "P2", subject: "中文", teacher: "伍MISS", day: "星期二", time: "15:30-16:30" },
-            { branch: "天澤", grade: "P2", subject: "數學", teacher: "湯SIR", day: "星期二", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P2", subject: "英文", teacher: "MISS LI", day: "星期四", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P2", subject: "英文", teacher: "姚MISS", day: "星期二", time: "17:30-18:30" },
-            { branch: "天澤", grade: "P2", subject: "英文", teacher: "姚MISS", day: "星期日", time: "16:15-17:15" },
-            { branch: "天澤", grade: "P2", subject: "數學", teacher: "湯SIR", day: "星期日", time: "18:15-19:15" },
-
-            // P3
-            { branch: "天澤", grade: "P3", subject: "數學", teacher: "湯SIR", day: "星期一", time: "15:30-16:30" },
-            { branch: "天澤", grade: "P3", subject: "英文", teacher: "姚MISS", day: "星期二", time: "15:30-16:30" },
-            { branch: "天澤", grade: "P3", subject: "英文", teacher: "MISS LI", day: "星期三", time: "15:30-16:30" },
-            { branch: "天澤", grade: "P3", subject: "英文", teacher: "MISS LI", day: "星期五", time: "15:30-16:30" },
-            { branch: "天澤", grade: "P3", subject: "英文", teacher: "姚MISS", day: "星期一", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P3", subject: "英文", teacher: "MISS LI", day: "星期二", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P3", subject: "中文", teacher: "伍MISS", day: "星期三", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P3", subject: "數學", teacher: "鄧SIR", day: "星期三", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P3", subject: "數學", teacher: "湯SIR", day: "星期二", time: "18:30-19:30" },
-            { branch: "天澤", grade: "P3", subject: "中文", teacher: "楊SIR", day: "星期六", time: "10:00-11:00" },
-            { branch: "天澤", grade: "P3", subject: "數學", teacher: "湯SIR", day: "星期日", time: "10:00-11:00" },
-            { branch: "天澤", grade: "P3", subject: "英文", teacher: "姚MISS", day: "星期日", time: "12:00-13:00" },
-            { branch: "天澤", grade: "P3", subject: "數學", teacher: "湯SIR", day: "星期六", time: "17:15-18:15" },
-            { branch: "天澤", grade: "P3", subject: "英文", teacher: "姚MISS", day: "星期日", time: "17:15-18:15" },
-
-            // P4
-            { branch: "天澤", grade: "P4", subject: "數學", teacher: "湯SIR", day: "星期二", time: "15:30-16:30" },
-            { branch: "天澤", grade: "P4", subject: "中文", teacher: "楊SIR", day: "星期三", time: "15:30-16:30" },
-            { branch: "天澤", grade: "P4", subject: "英文", teacher: "MISS LI", day: "星期四", time: "15:30-16:30" },
-            { branch: "天澤", grade: "P4", subject: "中文", teacher: "中作伍MISS", day: "星期五", time: "15:30-16:30" },
-            { branch: "天澤", grade: "P4", subject: "英文", teacher: "姚MISS", day: "星期二", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P4", subject: "數學", teacher: "鄧SIR", day: "星期二", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P4", subject: "英文", teacher: "MISS LI", day: "星期三", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P4", subject: "中文", teacher: "梁MISS", day: "星期五", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P4", subject: "數學", teacher: "湯SIR", day: "星期五", time: "17:30-18:30" },
-            { branch: "天澤", grade: "P4", subject: "中文", teacher: "伍MISS", day: "星期六", time: "11:00-12:00" },
-            { branch: "天澤", grade: "P4", subject: "英文", teacher: "姚MISS", day: "星期日", time: "11:00-12:00" },
-            { branch: "天澤", grade: "P4", subject: "中文", teacher: "楊SIR", day: "星期六", time: "14:15-15:15" },
-            { branch: "天澤", grade: "P4", subject: "英文", teacher: "姚MISS", day: "星期日", time: "15:15-16:15" },
-            { branch: "天澤", grade: "P4", subject: "數學", teacher: "湯SIR", day: "星期日", time: "16:15-17:15" },
-            { branch: "天澤", grade: "P4", subject: "數學", teacher: "湯SIR", day: "星期六", time: "18:15-19:15" },
-
-            // P5
-            { branch: "天澤", grade: "P5", subject: "數學", teacher: "鄧SIR", day: "星期三", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P5", subject: "數學", teacher: "湯SIR", day: "星期四", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P5", subject: "英文", teacher: "MISS LI", day: "星期二", time: "17:30-18:30" },
-            { branch: "天澤", grade: "P5", subject: "英文", teacher: "MISS LI", day: "星期四", time: "17:30-18:30" },
-            { branch: "天澤", grade: "P5", subject: "英文", teacher: "姚MISS", day: "星期一", time: "18:30-19:30" },
-            { branch: "天澤", grade: "P5", subject: "數學", teacher: "湯SIR", day: "星期一", time: "18:30-19:30" },
-            { branch: "天澤", grade: "P5", subject: "中文", teacher: "伍MISS", day: "星期二", time: "18:30-19:30" },
-            { branch: "天澤", grade: "P5", subject: "英文", teacher: "姚MISS", day: "星期二", time: "18:30-19:30" },
-            { branch: "天澤", grade: "P5", subject: "中文", teacher: "楊SIR", day: "星期六", time: "09:00-10:00" },
-            { branch: "天澤", grade: "P5", subject: "數學", teacher: "湯SIR", day: "星期六", time: "09:00-10:00" },
-            { branch: "天澤", grade: "P5", subject: "英文", teacher: "姚MISS", day: "星期日", time: "09:00-10:00" },
-            { branch: "天澤", grade: "P5", subject: "英文", teacher: "MISS LI", day: "星期六", time: "10:00-11:00" },
-            { branch: "天澤", grade: "P5", subject: "中文", teacher: "楊SIR", day: "星期六", time: "15:15-16:15" },
-            { branch: "天澤", grade: "P5", subject: "英文", teacher: "MISS LI", day: "星期六", time: "15:15-16:15" },
-            { branch: "天澤", grade: "P5", subject: "數學", teacher: "湯SIR", day: "星期日", time: "15:15-16:15" },
-            { branch: "天澤", grade: "P5", subject: "英文", teacher: "姚MISS", day: "星期日", time: "18:15-19:15" },
-
-            // P6
-            { branch: "天澤", grade: "P6", subject: "數學", teacher: "湯SIR", day: "星期五", time: "15:30-16:30" },
-            { branch: "天澤", grade: "P6", subject: "數學", teacher: "湯SIR", day: "星期一", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P6", subject: "中文", teacher: "中作伍MISS", day: "星期二", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P6", subject: "中文", teacher: "楊SIR", day: "星期三", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P6", subject: "英文", teacher: "MISS LI", day: "星期五", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P6", subject: "數學", teacher: "鄧SIR", day: "星期五", time: "16:30-17:30" },
-            { branch: "天澤", grade: "P6", subject: "英文", teacher: "姚MISS", day: "星期一", time: "17:30-18:30" },
-            { branch: "天澤", grade: "P6", subject: "數學", teacher: "鄧SIR", day: "星期二", time: "17:30-18:30" },
-            { branch: "天澤", grade: "P6", subject: "英文", teacher: "MISS LI", day: "星期三", time: "17:30-18:30" },
-            { branch: "天澤", grade: "P6", subject: "中文", teacher: "伍MISS", day: "星期五", time: "17:30-18:30" },
-            { branch: "天澤", grade: "P6", subject: "英文", teacher: "MISS LI", day: "星期二", time: "18:30-19:30" },
-            { branch: "天澤", grade: "P6", subject: "英文", teacher: "姚MISS", day: "星期日", time: "10:00-11:00" },
-            { branch: "天澤", grade: "P6", subject: "數學", teacher: "湯SIR", day: "星期日", time: "11:00-12:00" },
-            { branch: "天澤", grade: "P6", subject: "中文", teacher: "楊SIR", day: "星期六", time: "12:00-13:00" },
-            { branch: "天澤", grade: "P6", subject: "數學", teacher: "湯SIR", day: "星期六", time: "12:00-13:00" },
-            { branch: "天澤", grade: "P6", subject: "英文", teacher: "姚MISS", day: "星期日", time: "14:15-15:15" },
-            { branch: "天澤", grade: "P6", subject: "中文", teacher: "伍MISS", day: "星期六", time: "15:15-16:15" },
-            { branch: "天澤", grade: "P6", subject: "數學", teacher: "鄧SIR", day: "星期六", time: "15:15-16:15" },
-            { branch: "天澤", grade: "P6", subject: "數學", teacher: "湯SIR", day: "星期六", time: "16:15-17:15" },
-            { branch: "天澤", grade: "P6", subject: "英文", teacher: "MISS LI", day: "星期六", time: "17:15-18:15" },
-
-            // F1
-            { branch: "天澤", grade: "F1", subject: "數學", teacher: "湯SIR", day: "星期一", time: "17:30-18:30" },
-            { branch: "天澤", grade: "F1", subject: "中文", teacher: "楊SIR", day: "星期三", time: "17:30-18:30" },
-            { branch: "天澤", grade: "F1", subject: "英文", teacher: "MISS LI", day: "星期四", time: "17:30-18:30" },
-            { branch: "天澤", grade: "F1", subject: "中文", teacher: "楊SIR", day: "星期二", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F1", subject: "數學", teacher: "鄧SIR", day: "星期三", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F1", subject: "中文", teacher: "伍MISS", day: "星期三", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F1", subject: "數學", teacher: "湯SIR", day: "星期六", time: "10:00-11:00" },
-            { branch: "天澤", grade: "F1", subject: "數學", teacher: "鄧SIR", day: "星期六", time: "12:00-13:00" },
-            { branch: "天澤", grade: "F1", subject: "中文", teacher: "伍MISS", day: "星期六", time: "13:15-14:15" },
-            { branch: "天澤", grade: "F1", subject: "數學", teacher: "湯SIR", day: "星期日", time: "14:15-15:15" },
-            { branch: "天澤", grade: "F1", subject: "英文", teacher: "MISS LI", day: "星期六", time: "16:15-17:15" },
-
-            // F2
-            { branch: "天澤", grade: "F2", subject: "中文", teacher: "伍MISS", day: "星期五", time: "16:30-17:30" },
-            { branch: "天澤", grade: "F2", subject: "中文", teacher: "伍MISS", day: "星期二", time: "17:30-18:30" },
-            { branch: "天澤", grade: "F2", subject: "數學", teacher: "湯SIR", day: "星期二", time: "17:30-18:30" },
-            { branch: "天澤", grade: "F2", subject: "數學", teacher: "鄧SIR", day: "星期三", time: "17:30-18:30" },
-            { branch: "天澤", grade: "F2", subject: "數學", teacher: "鄧SIR", day: "星期四", time: "17:30-18:30" },
-            { branch: "天澤", grade: "F2", subject: "英文", teacher: "MISS LI", day: "星期二", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F2", subject: "數學", teacher: "鄧SIR", day: "星期六", time: "10:00-11:00" },
-            { branch: "天澤", grade: "F2", subject: "英文", teacher: "MISS LI", day: "星期六", time: "11:00-12:00" },
-            { branch: "天澤", grade: "F2", subject: "中文", teacher: "伍MISS", day: "星期六", time: "14:15-15:15" },
-            { branch: "天澤", grade: "F2", subject: "數學", teacher: "湯SIR", day: "星期六", time: "15:15-16:15" },
-            { branch: "天澤", grade: "F2", subject: "中文", teacher: "楊SIR", day: "星期六", time: "16:15-17:15" },
-            { branch: "天澤", grade: "F2", subject: "英文", teacher: "MISS LI", day: "星期六", time: "18:15-19:15" },
-
-            // F3
-            { branch: "天澤", grade: "F3", subject: "數學", teacher: "鄧SIR", day: "星期三", time: "17:30-18:30" },
-            { branch: "天澤", grade: "F3", subject: "數學", teacher: "鄧SIR", day: "星期二", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F3", subject: "英文", teacher: "MISS LI", day: "星期四", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F3", subject: "中文", teacher: "伍MISS", day: "星期五", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F3", subject: "英文", teacher: "MISS LI", day: "星期六", time: "09:00-10:00" },
-            { branch: "天澤", grade: "F3", subject: "中文", teacher: "伍MISS", day: "星期六", time: "10:00-11:00" },
-            { branch: "天澤", grade: "F3", subject: "數學", teacher: "湯SIR", day: "星期六", time: "11:00-12:00" },
-            { branch: "天澤", grade: "F3", subject: "數學", teacher: "湯SIR", day: "星期日", time: "12:00-13:00" },
-            { branch: "天澤", grade: "F3", subject: "英文", teacher: "MISS LI", day: "星期六", time: "13:00-14:00" },
-            { branch: "天澤", grade: "F3", subject: "數學", teacher: "鄧SIR", day: "星期六", time: "14:15-15:15" },
-            { branch: "天澤", grade: "F3", subject: "中文", teacher: "伍MISS", day: "星期六", time: "16:15-17:15" },
-            { branch: "天澤", grade: "F3", subject: "中文", teacher: "楊SIR", day: "星期六", time: "17:15-18:15" },
-
-            // F4
-            { branch: "天澤", grade: "F4", subject: "中文", teacher: "楊SIR", day: "星期二", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F4", subject: "數學", teacher: "鄧SIR", day: "星期三", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F4", subject: "英文", teacher: "MISS LI", day: "星期四", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F4", subject: "數學", teacher: "湯SIR", day: "星期四", time: "18:30-19:30" },
-            { branch: "天澤", grade: "F4", subject: "數學", teacher: "鄧SIR", day: "星期六", time: "11:00-12:00" },
-            { branch: "天澤", grade: "F4", subject: "中文", teacher: "楊SIR", day: "星期六", time: "11:00-12:00" },
-            { branch: "天澤", grade: "F4", subject: "英文", teacher: "MISS LI", day: "星期六", time: "12:00-13:00" },
-            { branch: "天澤", grade: "F4", subject: "數學", teacher: "湯SIR", day: "星期六", time: "14:15-15:15" },
-            { branch: "天澤", grade: "F4", subject: "數學", teacher: "鄧SIR", day: "星期六", time: "16:15-17:15" },
-            { branch: "天澤", grade: "F4", subject: "數學", teacher: "湯SIR", day: "星期日", time: "17:15-18:15" },
-
-            // 銀座 P1
-            { branch: "銀座", grade: "P1", subject: "中文", teacher: "陳MISS", day: "星期五", time: "14:30-15:30" },
-            { branch: "銀座", grade: "P1", subject: "英文", teacher: "姚MISS", day: "星期二", time: "18:30-19:30" },
-
-            // 銀座 P2
-            { branch: "銀座", grade: "P2", subject: "中文", teacher: "陳MISS", day: "星期五", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P2", subject: "英文", teacher: "姚MISS", day: "星期三", time: "16:30-17:30" },
-            { branch: "銀座", grade: "P2", subject: "中文", teacher: "陳MISS", day: "星期一", time: "17:30-18:30" },
-
-            // 銀座 P3
-            { branch: "銀座", grade: "P3", subject: "英文", teacher: "陳SIR", day: "星期一", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P3", subject: "中文", teacher: "楊SIR", day: "星期二", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P3", subject: "中文", teacher: "楊SIR", day: "星期四", time: "16:30-17:30" },
-            { branch: "銀座", grade: "P3", subject: "數學", teacher: "廖SIR", day: "星期二", time: "17:30-18:30" },
-            { branch: "銀座", grade: "P3", subject: "英文", teacher: "姚MISS", day: "星期三", time: "17:30-18:30" },
-            { branch: "銀座", grade: "P3", subject: "英文", teacher: "陳SIR", day: "星期日", time: "10:00-11:00" },
-            { branch: "銀座", grade: "P3", subject: "中文", teacher: "梁MISS", day: "星期日", time: "17:15-18:15" },
-
-            // 銀座 P4
-            { branch: "銀座", grade: "P4", subject: "數學", teacher: "廖SIR", day: "星期三", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P4", subject: "數學", teacher: "廖SIR", day: "星期一", time: "16:30-17:30" },
-            { branch: "銀座", grade: "P4", subject: "英文", teacher: "陳SIR", day: "星期二", time: "16:30-17:30" },
-            { branch: "銀座", grade: "P4", subject: "英文", teacher: "姚MISS", day: "星期三", time: "17:30-18:30" },
-            { branch: "銀座", grade: "P4", subject: "中文", teacher: "楊SIR", day: "星期五", time: "17:30-18:30" },
-            { branch: "銀座", grade: "P4", subject: "中文", teacher: "中作陳MISS", day: "星期六", time: "11:00-12:00" },
-            { branch: "銀座", grade: "P4", subject: "中文", teacher: "陳MISS", day: "星期日", time: "11:00-12:00" },
-            { branch: "銀座", grade: "P4", subject: "數學", teacher: "廖SIR", day: "星期六", time: "14:15-15:15" },
-            { branch: "銀座", grade: "P4", subject: "英文", teacher: "陳SIR", day: "星期日", time: "14:15-15:15" },
-            { branch: "銀座", grade: "P4", subject: "中文", teacher: "陳MISS", day: "星期六", time: "15:15-16:15" },
-            { branch: "銀座", grade: "P4", subject: "中文", teacher: "梁MISS", day: "星期日", time: "15:15-16:15" },
-
-            // 銀座 P5
-            { branch: "銀座", grade: "P5", subject: "數學", teacher: "廖SIR", day: "星期一", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P5", subject: "英文", teacher: "陳SIR", day: "星期二", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P5", subject: "英文", teacher: "姚MISS", day: "星期三", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P5", subject: "中文", teacher: "陳MISS", day: "星期四", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P5", subject: "中文", teacher: "楊SIR", day: "星期五", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P5", subject: "數學", teacher: "廖SIR", day: "星期四", time: "16:30-17:30" },
-            { branch: "銀座", grade: "P5", subject: "英文", teacher: "姚MISS", day: "星期四", time: "16:30-17:30" },
-            { branch: "銀座", grade: "P5", subject: "數學", teacher: "廖SIR", day: "星期一", time: "17:30-18:30" },
-            { branch: "銀座", grade: "P5", subject: "數學", teacher: "廖SIR", day: "星期二", time: "17:30-18:30" },
-            { branch: "銀座", grade: "P5", subject: "中文", teacher: "楊SIR", day: "星期二", time: "17:30-18:30" },
-            { branch: "銀座", grade: "P5", subject: "中文", teacher: "陳MISS", day: "星期一", time: "18:30-19:30" },
-            { branch: "銀座", grade: "P5", subject: "英文", teacher: "陳SIR", day: "星期六", time: "09:00-10:00" },
-            { branch: "銀座", grade: "P5", subject: "英文", teacher: "陳SIR", day: "星期日", time: "09:00-10:00" },
-            { branch: "銀座", grade: "P5", subject: "中文", teacher: "陳MISS", day: "星期六", time: "10:00-11:00" },
-            { branch: "銀座", grade: "P5", subject: "中文", teacher: "梁MISS", day: "星期日", time: "10:00-11:00" },
-            { branch: "銀座", grade: "P5", subject: "數學", teacher: "廖SIR", day: "星期六", time: "11:00-12:00" },
-            { branch: "銀座", grade: "P5", subject: "英文", teacher: "陳SIR", day: "星期日", time: "11:00-12:00" },
-            { branch: "銀座", grade: "P5", subject: "中文", teacher: "中作陳MISS", day: "星期六", time: "12:00-13:00" },
-            { branch: "銀座", grade: "P5", subject: "中文", teacher: "陳MISS", day: "星期日", time: "12:00-13:00" },
-            { branch: "銀座", grade: "P5", subject: "英文", teacher: "陳SIR", day: "星期日", time: "15:15-16:15" },
-            { branch: "銀座", grade: "P5", subject: "中文", teacher: "梁MISS", day: "星期日", time: "16:15-17:15" },
-            { branch: "銀座", grade: "P5", subject: "數學", teacher: "廖SIR", day: "星期六", time: "17:15-18:15" },
-
-            // 銀座 P6
-            { branch: "銀座", grade: "P6", subject: "中文", teacher: "陳MISS", day: "星期一", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P6", subject: "數學", teacher: "廖SIR", day: "星期二", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P6", subject: "數學", teacher: "廖SIR", day: "星期三", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P6", subject: "英文", teacher: "姚MISS", day: "星期四", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P6", subject: "中文", teacher: "陳MISS", day: "星期五", time: "15:30-16:30" },
-            { branch: "銀座", grade: "P6", subject: "英文", teacher: "陳SIR", day: "星期一", time: "16:30-17:30" },
-            { branch: "銀座", grade: "P6", subject: "中文", teacher: "楊SIR", day: "星期二", time: "16:30-17:30" },
-            { branch: "銀座", grade: "P6", subject: "英文", teacher: "陳SIR", day: "星期三", time: "16:30-17:30" },
-            { branch: "銀座", grade: "P6", subject: "中文", teacher: "中作陳MISS", day: "星期四", time: "16:30-17:30" },
-            { branch: "銀座", grade: "P6", subject: "數學", teacher: "廖SIR", day: "星期四", time: "17:30-18:30" },
-            { branch: "銀座", grade: "P6", subject: "英文", teacher: "陳SIR", day: "星期一", time: "18:30-19:30" },
-            { branch: "銀座", grade: "P6", subject: "數學", teacher: "廖SIR", day: "星期二", time: "18:30-19:30" },
-            { branch: "銀座", grade: "P6", subject: "中文", teacher: "陳MISS", day: "星期四", time: "18:30-19:30" },
-            { branch: "銀座", grade: "P6", subject: "英文", teacher: "姚MISS", day: "星期四", time: "18:30-19:30" },
-            { branch: "銀座", grade: "P6", subject: "中文", teacher: "陳MISS", day: "星期六", time: "09:00-10:00" },
-            { branch: "銀座", grade: "P6", subject: "數學", teacher: "廖SIR", day: "星期六", time: "09:00-10:00" },
-            { branch: "銀座", grade: "P6", subject: "英文", teacher: "陳SIR", day: "星期六", time: "10:00-11:00" },
-            { branch: "銀座", grade: "P6", subject: "中文", teacher: "陳MISS", day: "星期日", time: "10:00-11:00" },
-            { branch: "銀座", grade: "P6", subject: "中文", teacher: "梁MISS", day: "星期日", time: "11:00-12:00" },
-            { branch: "銀座", grade: "P6", subject: "英文", teacher: "陳SIR", day: "星期六", time: "14:15-15:15" },
-            { branch: "銀座", grade: "P6", subject: "數學", teacher: "廖SIR", day: "星期六", time: "15:15-16:15" },
-            { branch: "銀座", grade: "P6", subject: "中文", teacher: "陳MISS", day: "星期六", time: "16:15-17:15" },
-            { branch: "銀座", grade: "P6", subject: "英文", teacher: "陳SIR", day: "星期六", time: "16:15-17:15" },
-
-            // 銀座 F1
-            { branch: "銀座", grade: "F1", subject: "數學", teacher: "廖SIR", day: "星期二", time: "16:30-17:30" },
-            { branch: "銀座", grade: "F1", subject: "中文", teacher: "陳MISS", day: "星期五", time: "16:30-17:30" },
-            { branch: "銀座", grade: "F1", subject: "英文", teacher: "陳SIR", day: "星期三", time: "17:30-18:30" },
-            { branch: "銀座", grade: "F1", subject: "中文", teacher: "楊SIR", day: "星期二", time: "18:30-19:30" },
-            { branch: "銀座", grade: "F1", subject: "英文", teacher: "陳SIR", day: "星期六", time: "11:00-12:00" },
-            { branch: "銀座", grade: "F1", subject: "英文", teacher: "陳SIR", day: "星期日", time: "11:00-12:00" },
-            { branch: "銀座", grade: "F1", subject: "數學", teacher: "廖SIR", day: "星期六", time: "12:00-13:00" },
-            { branch: "銀座", grade: "F1", subject: "中文", teacher: "陳MISS", day: "星期日", time: "12:00-13:00" },
-            { branch: "銀座", grade: "F1", subject: "英文", teacher: "陳SIR", day: "星期六", time: "15:15-16:15" },
-            { branch: "銀座", grade: "F1", subject: "數學", teacher: "廖SIR", day: "星期六", time: "16:15-17:15" },
-            { branch: "銀座", grade: "F1", subject: "中文", teacher: "陳MISS", day: "星期六", time: "17:15-18:15" },
-
-            // 銀座 F2
-            { branch: "銀座", grade: "F2", subject: "中文", teacher: "陳MISS", day: "星期四", time: "16:30-17:30" },
-            { branch: "銀座", grade: "F2", subject: "英文", teacher: "陳SIR", day: "星期一", time: "17:30-18:30" },
-            { branch: "銀座", grade: "F2", subject: "英文", teacher: "陳SIR", day: "星期二", time: "17:30-18:30" },
-            { branch: "銀座", grade: "F2", subject: "數學", teacher: "廖SIR", day: "星期四", time: "17:30-18:30" },
-            { branch: "銀座", grade: "F2", subject: "中文", teacher: "陳MISS", day: "星期日", time: "09:00-10:00" },
-            { branch: "銀座", grade: "F2", subject: "數學", teacher: "廖SIR", day: "星期六", time: "10:00-11:00" },
-            { branch: "銀座", grade: "F2", subject: "英文", teacher: "陳SIR", day: "星期六", time: "17:15-18:15" },
-
-            // 銀座 F3
-            { branch: "銀座", grade: "F3", subject: "英文", teacher: "陳SIR", day: "星期二", time: "17:30-18:30" },
-            { branch: "銀座", grade: "F3", subject: "數學", teacher: "廖SIR", day: "星期二", time: "17:30-18:30" },
-            { branch: "銀座", grade: "F3", subject: "中文", teacher: "陳MISS", day: "星期四", time: "17:30-18:30" },
-            { branch: "銀座", grade: "F3", subject: "中文", teacher: "楊SIR", day: "星期四", time: "17:30-18:30" },
-            { branch: "銀座", grade: "F3", subject: "中文", teacher: "陳MISS", day: "星期日", time: "15:15-16:15" },
-            { branch: "銀座", grade: "F3", subject: "英文", teacher: "陳SIR", day: "星期日", time: "16:15-17:15" },
-            { branch: "銀座", grade: "F3", subject: "數學", teacher: "廖SIR", day: "星期六", time: "18:15-19:15" },
-
-            // 銀座 F5
-            { branch: "銀座", grade: "F5", subject: "中文", teacher: "楊SIR", day: "星期五", time: "19:30-20:30" }
-        ];
-
-        const days = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"];
-
-        function filterSchedule() {
-            const selectedBranch = document.getElementById("branch").value;
-            const selectedGrade = document.getElementById("grade").value;
-            const selectedSubject = document.getElementById("subject").value;
-
-            // 進行三重條件篩選：分校、年級、科目
-            const filtered = scheduleData.filter(item => {
-                const branchMatch = (selectedBranch === "ALL" || item.branch === selectedBranch);
-                const gradeMatch = (selectedGrade === "ALL" || item.grade === selectedGrade);
-                const subjectMatch = (selectedSubject === "ALL" || item.subject === selectedSubject);
-                return branchMatch && gradeMatch && subjectMatch;
-            });
-
-            const timeSlots = [...new Set(filtered.map(item => item.time))].sort();
-
-            const tbody = document.getElementById("tableBody");
-            tbody.innerHTML = "";
-
-            if (timeSlots.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="no-data">沒有找到符合條件的班別時間</td></tr>`;
-                return;
-            }
-
-            timeSlots.forEach(time => {
-                const tr = document.createElement("tr");
-                
-                const timeTd = document.createElement("td");
-                timeTd.className = "time-col";
-                timeTd.textContent = time;
-                tr.appendChild(timeTd);
-
-                days.forEach(day => {
-                    const td = document.createElement("td");
-                    const matches = filtered.filter(item => item.time === time && item.day === day);
-                    
-                    matches.forEach(match => {
-                        const classDiv = document.createElement("div");
-                        classDiv.className = "class-card";
-                        classDiv.innerHTML = `<strong>[${match.grade}] ${match.subject}</strong><span class="class-teacher">${match.teacher}</span>`;
-                        td.appendChild(classDiv);
-                    });
-
-                    tr.appendChild(td);
-                });
-
-                tbody.appendChild(tr);
-            });
-        }
-
-        window.onload = filterSchedule;
-    </script>
 </body>
 </html>
