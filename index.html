@@ -88,7 +88,8 @@
 
     <h1>風穎教育 課程時間表查詢</h1>
 
-    <div class="filter-group">
+    <div class="filter-container">
+        <div class="filter-group">
             <label for="branch">分校：</label>
             <select id="branch" onchange="filterSchedule()">
                 <option value="ALL">所有分校</option>
@@ -113,6 +114,8 @@
                 <option value="F5">中五 (F5)</option>
             </select>
         </div>
+    </div>
+
     <div class="table-container">
         <table id="scheduleTable">
             <thead>
@@ -128,7 +131,7 @@
                 </tr>
             </thead>
             <tbody id="tableBody">
-                </tbody>
+            </tbody>
         </table>
     </div>
 
@@ -394,13 +397,12 @@
         function filterSchedule() {
             const selectedBranch = document.getElementById("branch").value;
             const selectedGrade = document.getElementById("grade").value;
-            const selectedSubject = document.getElementById("subject").value;
 
             // 篩選符合條件的課程
             const filtered = scheduleData.filter(item => {
-                return (item.branch === selectedBranch) &&
-                       (selectedGrade === "ALL" || item.grade === selectedGrade) &&
-                       (selectedSubject === "ALL" || item.subject === selectedSubject);
+                const branchMatch = (selectedBranch === "ALL" || item.branch === selectedBranch);
+                const gradeMatch = (selectedGrade === "ALL" || item.grade === selectedGrade);
+                return branchMatch && gradeMatch;
             });
 
             // 獲取所有出現的時間段並排序
